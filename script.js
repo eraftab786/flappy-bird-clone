@@ -22,7 +22,7 @@ cvs.addEventListener("click", function (event) {
     switch (state.current) {
         case state.getreadystate:
             state.current = state.game;
-            document.update;
+          
             break;
         case state.game:
             bird.move();
@@ -31,6 +31,9 @@ cvs.addEventListener("click", function (event) {
             state.current = state.getreadystate;
             pipes.reset();
             score.reset();
+             setTimeout(function(){
+                window.location.reload();
+            },1000)
             break;
     }
 })
