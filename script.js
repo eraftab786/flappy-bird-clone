@@ -180,6 +180,7 @@ var bird = {
 
     }, move: function () {
         this.speed = -this.jump;
+        this.frame=3;
 
     }
 
