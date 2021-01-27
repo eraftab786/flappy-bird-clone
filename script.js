@@ -7,6 +7,21 @@ var frames = 0;
 const sprite = new Image();
 sprite.src = "sprite.png";
 
+// loding sound file 
+let flap = new Audio();
+flap.src = "flap.wav";
+
+
+
+let hit = new Audio();
+hit.src = "hit.wav";
+
+let die = new Audio();
+die.src = "die.wav";
+
+let swooshing = new Audio();
+swooshing.src = "swooshing.wav";
+
 // state object
 
 const state = {
@@ -22,21 +37,38 @@ cvs.addEventListener("click", function (event) {
     switch (state.current) {
         case state.getreadystate:
             state.current = state.game;
-          
+            swooshing.play();
             break;
         case state.game:
             bird.move();
+            flap.play();
             break;
         case state.gameover:
-            state.current = state.getreadystate;
-            pipes.reset();
-            score.reset();
-             setTimeout(function(){
-                window.location.reload();
-            },1000)
-            break;
+            let cvsPosition = cvs.getBoundingClientRect();
+            let clickX = event.clientX - cvsPosition.left;// This line will be return our x axis position on where  mouse will be click click 
+            let clickY = event.clientY - cvsPosition.top;// This line will be return our x axis position on where  mouse will be click click 
+            // console.log(clickX, clickY);
+            if (clickX > startBtn.x && clickX < startBtn.x + startBtn.w && clickY > startBtn.y
+                && clickY < startBtn.y + startBtn.h) {
+                state.current = state.getreadystate;
+                pipes.reset();
+                score.reset();
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000)
+                break;
+            }
     }
 })
+
+// start button object
+const startBtn = {
+    x: 172,
+    y: 254,
+    w: 83,
+    h: 29,
+
+}
 // get ready section-------------------------
 const getready = {
     sX: 0,
@@ -72,25 +104,25 @@ const gameover = {
 
 const score = {
     value: 0,
-    best: parseInt(localStorage.getItem("best"))||0,
+    best: parseInt(localStorage.getItem("best")) || 0,
     draw: function () {
         if (state.current == state.game) {
             ctx.fillStyle = "black";
             ctx.font = "50px teko";
             ctx.fillText(this.value, cvs.width / 2, 100);
         }
-        else if(state.current==state.gameover){
+        else if (state.current == state.gameover) {
             ctx.fillStyle = "black";
             ctx.font = "30px teko";
-            ctx.fillText(this.value, cvs.width / 2+65, 180);
-            ctx.fillText(this.best, cvs.width / 2+65, 220);
+            ctx.fillText(this.value, cvs.width / 2 + 65, 180);
+            ctx.fillText(this.best, cvs.width / 2 + 65, 220);
         }
-    },reset:function(){
-        this.value=0;
+    }, reset: function () {
+        this.value = 0;
     }
 }
 
-// cloud object----
+// cloud object------------------------------------------------
 const bg = {
     sX: 0,
     sY: 0,
@@ -115,7 +147,7 @@ const bg = {
         }
     }
 }
-
+// ground object--------------------------------------
 const gd = {
 
     sX: 280,
@@ -141,7 +173,7 @@ const gd = {
     }
 }
 
-
+// bird object--------------------------------------------
 var bird = {
 
     animation: [
@@ -177,17 +209,22 @@ var bird = {
         if (this.y + this.h / 2 >= cvs.height - gd.h) {
             this.speed = 0;
             this.frame = 0;
-            state.current = state.gameover;
+            if (state.current == state.game) {
+                state.current = state.gameover;
+                die.play();
+            }
         }
 
 
     }, move: function () {
         this.speed = -this.jump;
-        this.frame=3;
+        this.frame = 3;
 
     }
 
 }
+
+// pipes object------------------
 const pipes = {
     position: [],
     top: {
@@ -234,9 +271,10 @@ const pipes = {
 
             if (p.x + this.w <= 0) {
                 // to increase score
+
                 score.value += 1;
-                score.best=Math.max(score.value,score.best);
-                localStorage.setItem("best",score.best);
+                score.best = Math.max(score.value, score.best);
+                localStorage.setItem("best", score.best);
                 //removing the pipes
                 this.position.shift();
             }
@@ -245,6 +283,7 @@ const pipes = {
             // for top pipes
             if (bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + this.w - 10 &&
                 bird.y + bird.radius > p.y && bird.y - bird.radius < p.y + this.h - 100) {
+                hit.play();
                 state.current = state.gameover;
 
             }
@@ -253,11 +292,12 @@ const pipes = {
             let tobp = p.y + this.h + this.gap;
             let bobp = p.y + this.h + this.gap + this.h;
             if (bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + this.w - 10 && bird.y + bird.radius > tobp && bird.y - bird.radius < bobp) {
+                hit.play();
                 state.current = state.gameover;
             }
         }
-    },reset:function(){
-        this.position=[];
+    }, reset: function () {
+        this.position = [];
     }
 }
 
