@@ -62,7 +62,7 @@ cvs.addEventListener("click", function (event) {
 
 // start button object
 const startBtn = {
-    x: 172,
+    x: 169,
     y: 254,
     w: 83,
     h: 29,
