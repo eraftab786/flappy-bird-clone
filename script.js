@@ -1,26 +1,25 @@
-
 const cvs = document.getElementById("canvas");
 const ctx = cvs.getContext("2d");
 // Declearing some variable--------
 var frames = 0;
 // fatching the image with imge object
 const sprite = new Image();
-sprite.src = "sprite.png";
+sprite.src = "images/sprite.png";
 
 // loding sound file 
 let flap = new Audio();
-flap.src = "flap.wav";
+flap.src = "audio/flap.wav";
 
 
 
 let hit = new Audio();
-hit.src = "hit.wav";
+hit.src = "audio/hit.wav";
 
 let die = new Audio();
-die.src = "die.wav";
+die.src = "audio/die.wav";
 
 let swooshing = new Audio();
-swooshing.src = "swooshing.wav";
+swooshing.src = "audio/swooshing.wav";
 
 // state object
 
