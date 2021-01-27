@@ -13,13 +13,13 @@ flap.src = "flap.wav";
 
 
 let hit = new Audio();
-hit.src = "audio/hit.wav";
+hit.src = "hit.wav";
 
 let die = new Audio();
-die.src = "audio/die.wav";
+die.src = "die.wav";
 
 let swooshing = new Audio();
-swooshing.src = "audio/swooshing.wav";
+swooshing.src = "swooshing.wav";
 
 // state object
 
