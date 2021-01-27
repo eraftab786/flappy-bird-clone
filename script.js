@@ -4,11 +4,11 @@ const ctx = cvs.getContext("2d");
 var frames = 0;
 // fatching the image with imge object
 const sprite = new Image();
-sprite.src = "images/sprite.png";
+sprite.src = "sprite.png";
 
 // loding sound file 
 let flap = new Audio();
-flap.src = "audio/flap.wav";
+flap.src = "flap.wav";
 
 
 
