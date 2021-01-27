@@ -46,7 +46,7 @@ cvs.addEventListener("click", function (event) {
             let cvsPosition = cvs.getBoundingClientRect();
             let clickX = event.clientX - cvsPosition.left;// This line will be return our x axis position on where  mouse will be click click 
             let clickY = event.clientY - cvsPosition.top;// This line will be return our x axis position on where  mouse will be click click 
-            //console.log(clickX, clickY);
+            console.log(clickX, clickY);
             if (clickX > startBtn.x && clickX < startBtn.x + startBtn.w && clickY > startBtn.y
                 && clickY < startBtn.y + startBtn.h) {
                 state.current = state.getreadystate;
